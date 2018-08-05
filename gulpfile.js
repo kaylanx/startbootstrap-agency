@@ -1,14 +1,15 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var header = require('gulp-header');
-var cleanCSS = require('gulp-clean-css');
-var rename = require("gulp-rename");
-var uglify = require('gulp-uglify');
-var pkg = require('./package.json');
-var browserSync = require('browser-sync').create();
+const gulp = require('gulp');
+const sass = require('gulp-sass');
+const header = require('gulp-header');
+const cleanCSS = require('gulp-clean-css');
+const rename = require("gulp-rename");
+const uglify = require('gulp-uglify-es').default;
+const pkg = require('./package.json');
+const browserSync = require('browser-sync').create();
+const babel = require('gulp-babel');
 
 // Set the banner content
-var banner = ['/*!\n',
+const banner = ['/*!\n',
   ' * Start Bootstrap - <%= pkg.title %> v<%= pkg.version %> (<%= pkg.homepage %>)\n',
   ' * Copyright 2013-' + (new Date()).getFullYear(), ' <%= pkg.author %>\n',
   ' * Licensed under <%= pkg.license %> (https://github.com/BlackrockDigital/<%= pkg.name %>/blob/master/LICENSE)\n',
@@ -81,8 +82,18 @@ gulp.task('css:minify', ['css:compile'], function() {
 // CSS
 gulp.task('css', ['css:compile', 'css:minify']);
 
+// Convert JSX to JavaScript
+gulp.task('babel', function() {
+  return gulp.src('./src/*.js')
+    .pipe(babel({
+      presets: ["react"]
+    }))
+    .pipe(gulp.dest('./js'))
+    .pipe(browserSync.stream());
+});
+
 // Minify JavaScript
-gulp.task('js:minify', function() {
+gulp.task('js:minify', ['babel'], function() {
   return gulp.src([
       './js/*.js',
       '!./js/*.min.js'
@@ -99,7 +110,7 @@ gulp.task('js:minify', function() {
 });
 
 // JS
-gulp.task('js', ['js:minify']);
+gulp.task('js', ['babel', 'js:minify']);
 
 // Default task
 gulp.task('default', ['css', 'js', 'vendor']);
@@ -117,5 +128,6 @@ gulp.task('browserSync', function() {
 gulp.task('dev', ['css', 'js', 'browserSync'], function() {
   gulp.watch('./scss/*.scss', ['css']);
   gulp.watch('./js/*.js', ['js']);
+  gulp.watch('./src/*.js', ['js']);
   gulp.watch('./*.html', browserSync.reload);
 });
