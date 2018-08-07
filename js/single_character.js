@@ -19,28 +19,60 @@ var _React = React,
 var _ReactDOM = ReactDOM,
     render = _ReactDOM.render;
 
-var CloseButton = function (_Component) {
-  _inherits(CloseButton, _Component);
+var SingleCharacter = function (_Component) {
+  _inherits(SingleCharacter, _Component);
 
-  function CloseButton(props) {
-    _classCallCheck(this, CloseButton);
+  function SingleCharacter(props) {
+    _classCallCheck(this, SingleCharacter);
 
-    return _possibleConstructorReturn(this, (CloseButton.__proto__ || Object.getPrototypeOf(CloseButton)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (SingleCharacter.__proto__ || Object.getPrototypeOf(SingleCharacter)).call(this, props));
+
+    _this.state = { character: {} };
+    return _this;
   }
 
-  _createClass(CloseButton, [{
+  _createClass(SingleCharacter, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var character = _characters2.default.filter(function (character) {
+        return character.name === 'bouncy';
+      })[0];
+
+      this.setState({ character: character });
+    }
+  }, {
     key: 'render',
     value: function render() {
+      var character = this.state.character;
+
+
+      if (typeof character.name === 'undefined') {
+        return null;
+      }
+
       return React.createElement(
-        'button',
-        { className: 'btn btn-primary', 'data-dismiss': 'modal', type: 'button' },
-        React.createElement('i', { className: 'fa fa-times' }),
-        'Close'
+        'div',
+        { 'class': 'col-md-4' },
+        React.createElement(
+          'a',
+          { 'class': 'portfolio-link', 'data-toggle': 'modal', 'data-character': character.name, href: '#characterModal' },
+          React.createElement('img', { 'class': 'mx-auto rounded-circle', src: "img/characters/" + character.name + ".jpg", alt: '' })
+        ),
+        React.createElement(
+          'h4',
+          null,
+          character.displayName
+        ),
+        React.createElement(
+          'p',
+          { 'class': 'text-muted' },
+          character.about
+        )
       );
     }
   }]);
 
-  return CloseButton;
+  return SingleCharacter;
 }(Component);
 
-render(React.createElement(CloseButton, null), document.getElementById('close-button'));
+render(React.createElement(SingleCharacter, null), document.getElementById('single-character'));

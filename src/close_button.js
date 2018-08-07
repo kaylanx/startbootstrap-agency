@@ -1,19 +1,22 @@
 'use strict';
 
-class CloseButton extends React.Component {
+const { Component } = React;
+const { render } = ReactDOM;
+import characters from '../json/characters.json';
+
+class CloseButton extends Component {
   constructor(props) {
     super(props);
-    this.state = { liked: false };
   }
 
   render() {
     return (
-      <button class="btn btn-primary" data-dismiss="modal" type="button">
-          <i class="fa fa-times"></i>
+      <button className="btn btn-primary" data-dismiss="modal" type="button">
+          <i className="fa fa-times"></i>
           Close
       </button>
     );
   }
 }
 
-ReactDOM.render(<CloseButton />, document.getElementById('#closeButton'));
+render(<CloseButton />, document.getElementById('close-button'));

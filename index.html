@@ -75,15 +75,7 @@
         </div>
       </div>
       <div class="row text-center">
-        <div class="col-md-4">
-          <a class="portfolio-link" data-toggle="modal" data-character="bouncy" href="#characterModal">
-           <img class="mx-auto rounded-circle" src="img/characters/bouncy.jpg" alt="">
-          </a>
-          <h4>Bouncy</h4>
-          <p class="text-muted">
-            Bouncy is a member of Flap's main family, 'The Hoppy Family', so called as the mother of the family is Hoppy. Bouncy is one of Flap's biggest characters. She was in the very first Flap in the story, 'Hoppy the Toppy and Bouncy the Wouncy.' Look, it rhymed,
-            ok!!
-          </p>
+        <div id="single-character">
         </div>
         <div class="col-md-4">
           <a class="portfolio-link" data-toggle="modal" data-character="cabbit" href="#characterModal">
@@ -404,7 +396,7 @@
 
                 <ul id="characterAppearances" class="list-inline">
                 </ul>
-                <div id="#closeButton">
+                <div id="close-button">
                 </div>
               </div>
             </div>
@@ -642,15 +634,24 @@
   <script src="js/agency.js"></script>
 
   <!-- React -->
+
   <script src="https://unpkg.com/react@16/umd/react.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/react-dom@16/umd/react-dom.production.min.js" crossorigin></script>
   <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
 
+  <!-- <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+  <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+  <script src="https://unpkg.com/babel-standalone@6/babel.js"></script> -->
+
   <!-- Load our React components. -->
+  <!--
   <script src="js/close_button.min.js"></script>
-
-
-
+  <script src="js/single_character.min.js"></script>
+  -->
+  <!-- <script type="module" src="js/characters.js"></script> -->
+  <script type="module" src="dist/App.bundle.min.js"></script>
+  <!-- <script type="module" src="js/close_button.js"></script> -->
+  <!-- <script type="module" src="js/single_character.js"></script> -->
 </body>
 
 </html>

@@ -7,6 +7,8 @@ const uglify = require('gulp-uglify-es').default;
 const pkg = require('./package.json');
 const browserSync = require('browser-sync').create();
 const babel = require('gulp-babel');
+// const webpack = require('gulp-webpack');
+const webpack = require('webpack-stream');
 
 // Set the banner content
 const banner = ['/*!\n',
@@ -86,7 +88,7 @@ gulp.task('css', ['css:compile', 'css:minify']);
 gulp.task('babel', function() {
   return gulp.src('./src/*.js')
     .pipe(babel({
-      presets: ["react"]
+      presets: ["es2015", "react"]
     }))
     .pipe(gulp.dest('./js'))
     .pipe(browserSync.stream());
@@ -98,6 +100,13 @@ gulp.task('js:minify', ['babel'], function() {
       './js/*.js',
       '!./js/*.min.js'
     ])
+    .pipe(webpack({
+      mode: 'development',
+      devtool: 'inline-source-map',
+      output: {
+        filename: 'App.bundle.js'
+      }
+    }))
     .pipe(uglify())
     .pipe(rename({
       suffix: '.min'
@@ -105,7 +114,7 @@ gulp.task('js:minify', ['babel'], function() {
     .pipe(header(banner, {
       pkg: pkg
     }))
-    .pipe(gulp.dest('./js'))
+    .pipe(gulp.dest('./dist'))
     .pipe(browserSync.stream());
 });
 
@@ -128,6 +137,6 @@ gulp.task('browserSync', function() {
 gulp.task('dev', ['css', 'js', 'browserSync'], function() {
   gulp.watch('./scss/*.scss', ['css']);
   gulp.watch('./js/*.js', ['js']);
-  gulp.watch('./src/*.js', ['js']);
+  gulp.watch('./src/*.js', ['babel']);
   gulp.watch('./*.html', browserSync.reload);
 });

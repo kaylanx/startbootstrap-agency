@@ -53,11 +53,11 @@
   });
 
   $('#characterModal').on('show.bs.modal', function(event) {
-    var anchor = $(event.relatedTarget)
-    var recipient = anchor.data('character')
-    var modal = $(this)
+    const anchor = $(event.relatedTarget)
+    const recipient = anchor.data('character')
+    const modal = $(this)
 
-    var character = charactersJson.filter(function(character) {
+    const character = charactersJson.filter(function(character) {
       return character.name === recipient;
     })[0];
 
