@@ -7,7 +7,6 @@ const uglify = require('gulp-uglify-es').default;
 const pkg = require('./package.json');
 const browserSync = require('browser-sync').create();
 const babel = require('gulp-babel');
-// const webpack = require('gulp-webpack');
 const webpack = require('webpack-stream');
 
 // Set the banner content
