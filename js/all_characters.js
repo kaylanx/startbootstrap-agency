@@ -10,6 +10,14 @@ var _react = require('react');
 
 var _react2 = _interopRequireDefault(_react);
 
+var _characters = require('../json/characters.json');
+
+var _characters2 = _interopRequireDefault(_characters);
+
+var _single_character = require('./single_character');
+
+var _single_character2 = _interopRequireDefault(_single_character);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -20,60 +28,38 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 
 var Component = _react2.default.Component;
 
-var SingleCharacter = function (_Component) {
-  _inherits(SingleCharacter, _Component);
+var AllCharacters = function (_Component) {
+  _inherits(AllCharacters, _Component);
 
-  function SingleCharacter(props) {
-    _classCallCheck(this, SingleCharacter);
+  function AllCharacters(props) {
+    _classCallCheck(this, AllCharacters);
 
-    var _this = _possibleConstructorReturn(this, (SingleCharacter.__proto__ || Object.getPrototypeOf(SingleCharacter)).call(this, props));
+    var _this = _possibleConstructorReturn(this, (AllCharacters.__proto__ || Object.getPrototypeOf(AllCharacters)).call(this, props));
 
-    _this.state = { character: props.character };
+    _this.state = { characters: {} };
     return _this;
   }
 
-  _createClass(SingleCharacter, [{
+  _createClass(AllCharacters, [{
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      this.setState({ character: _characters2.default });
+    }
+  }, {
     key: 'render',
     value: function render() {
-      var character = this.state.character;
-
-
-      if (typeof character.name === 'undefined') {
-        return null;
-      }
-
+      var characterList = _characters2.default.map(function (character) {
+        return _react2.default.createElement(_single_character2.default, { key: character.name, character: character });
+      });
       return _react2.default.createElement(
         'div',
-        { className: 'col-md-4', key: character.name },
-        _react2.default.createElement(
-          'a',
-          {
-            className: 'portfolio-link',
-            'data-toggle': 'modal',
-            'data-character': character.name,
-            href: '#characterModal'
-          },
-          _react2.default.createElement('img', {
-            className: 'mx-auto rounded-circle',
-            src: 'img/characters/' + character.name + '.jpg',
-            alt: ''
-          })
-        ),
-        _react2.default.createElement(
-          'h4',
-          null,
-          character.displayName
-        ),
-        _react2.default.createElement(
-          'p',
-          { className: 'text-muted' },
-          character.summary
-        )
+        { className: 'row text-center' },
+        characterList
       );
     }
   }]);
 
-  return SingleCharacter;
+  return AllCharacters;
 }(Component);
 
-exports.default = SingleCharacter;
+exports.default = AllCharacters;

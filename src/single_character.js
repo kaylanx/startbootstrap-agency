@@ -1,26 +1,17 @@
 'use strict';
 
+import React from 'react';
+
 const { Component } = React;
-const { render } = ReactDOM;
-import characters from '../json/characters.json';
 
 class SingleCharacter extends Component {
 
   constructor(props) {
     super(props);
-    this.state = { character: {} }
-  }
-
-  componentDidMount() {
-    const character = characters.filter(function(character) {
-      return character.name === 'bouncy';
-    })[0];
-
-    this.setState({character: character});
+    this.state = { character: props.character };
   }
 
   render() {
-
     const { character } = this.state;
 
     if (typeof character.name === 'undefined') {
@@ -28,17 +19,26 @@ class SingleCharacter extends Component {
     }
 
     return (
-      <div class="col-md-4">
-        <a class="portfolio-link" data-toggle="modal" data-character={character.name} href="#characterModal">
-         <img class="mx-auto rounded-circle" src={"img/characters/"+character.name+".jpg"} alt=""/>
+      <div className="col-md-4" key={character.name}>
+        <a
+           className="portfolio-link"
+           data-toggle="modal"
+           data-character={character.name}
+           href="#characterModal"
+        >
+         <img
+           className="mx-auto rounded-circle"
+           src={`img/characters/${character.name}.jpg`}
+           alt=""
+         />
         </a>
         <h4>{character.displayName}</h4>
-        <p class="text-muted">
-          {character.about}
+        <p className="text-muted">
+          {character.summary}
         </p>
       </div>
     );
   }
 }
 
-render(<SingleCharacter/>, document.getElementById('single-character'));
+export default SingleCharacter;
